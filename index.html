@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>G Prajwal Priyadarshan — ML · DL · Web Dev</title>
+
+  <!-- SEO / Social -->
+  <meta name="description" content="G Prajwal Priyadarshan — 2nd-year AIE undergraduate at Amrita Coimbatore. Builds ML/DL solutions, web apps and researches wind forecasting & smart grid cybersecurity." />
+  <meta property="og:title" content="G Prajwal Priyadarshan — ML · DL · Web Dev" />
+  <meta property="og:description" content="2nd-year AIE undergraduate building applied ML/DL models, Streamlit demos, and small full-stack apps. Research in wind forecasting & smart grid cybersecurity." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/og-image.png" />
+  <meta property="og:url" content="https://your-site.example.com" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+
+  <!-- Bootstrap (kept for quick components / modal) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- AOS for simple scroll animations -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- Inlined dark theme styles (swap with external style.css if you prefer) -->
+  <style>
+    :root{
+      --bg:#0B0D0F;
+      --surface:#111217;
+      --muted:#9AA3B2;
+      --accent:#1EA7FF;
+      --accent-2:#00E5C0;
+      --glass: rgba(255,255,255,0.04);
+      --card-shadow: 0 8px 24px rgba(8,10,12,0.6);
+      --radius: 1rem;
+      --max-width:1200px;
+      color-scheme: dark;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family:Inter, Poppins, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, var(--bg), #070708 120%);
+      color:#E6EEF3;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    /* Header / navbar */
+    .navbar{
+      background: linear-gradient(180deg, rgba(11,13,15,0.9), rgba(11,13,15,0.75));
+      border-bottom: 1px solid rgba(255,255,255,0.02);
+      padding: .7rem 1rem;
+      transition: background .25s, box-shadow .25s;
+      z-index: 1200;
+    }
+    .brand-name{
+      font-weight:700;
+      color:var(--accent);
+      letter-spacing:0.4px;
+    }
+    .nav-link{color:rgba(230,238,243,0.8);}
+    .nav-link:focus, .nav-link:hover{color:var(--accent); text-decoration:none;}
+
+    /* Hero */
+    .hero{
+      min-height:80vh;
+      display:flex;
+      align-items:center;
+      padding:6rem 0 4rem;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero .col-left{
+      max-width:640px;
+    }
+    .title{
+      font-size: clamp(28px, 5.5vw, 48px);
+      line-height:1.05;
+      font-weight:800;
+      color: #FFF;
+      margin-bottom: .5rem;
+    }
+    .tagline{
+      color:var(--muted);
+      margin-bottom:1.25rem;
+      font-weight:500;
+    }
+    .elevator{
+      color: #CFE8FF;
+      margin-bottom:1.25rem;
+      font-size:1.05rem;
+    }
+    .cta-primary{
+      background:linear-gradient(90deg,var(--accent), #18C3FF);
+      border: none;
+      box-shadow: 0 6px 24px rgba(30,167,255,0.12);
+      color: #07101A;
+      padding: .625rem 1.15rem;
+      border-radius: .75rem;
+      font-weight: 700;
+    }
+    .cta-outline{
+      color: var(--accent);
+      border: 1px solid rgba(30,167,255,0.18);
+      background: transparent;
+      padding: .5rem 1rem;
+      border-radius: .75rem;
+      font-weight:600;
+    }
+    .profile-img{
+      width:220px;
+      height:220px;
+      object-fit:cover;
+      border-radius:50%;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+      border: 3px solid rgba(30,167,255,0.06);
+    }
+    .tech-badges{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem;}
+    .badge-tech{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.02);
+      padding: .35rem .6rem;
+      border-radius: .5rem;
+      font-weight:600;
+      color:var(--muted);
+      font-size: .85rem;
+    }
+    .hero-meta{
+      margin-top:1rem;
+      color:var(--muted);
+      font-size:.92rem;
+    }
+
+    /* Sections */
+    section{padding:3.5rem 0;}
+    .section-header{font-size:1.4rem;font-weight:700;margin-bottom:1rem;color:#F4FBFF;}
+    .glass-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.03);
+      padding:1.35rem;
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+    }
+
+    /* About */
+    .about-grid{display:grid;grid-template-columns: 260px 1fr;gap:2rem;align-items:center;}
+    .about-bio{color: #dfeffb; line-height:1.6;}
+    .facts-list li{margin-bottom:.6rem;color:var(--muted);}
+
+    /* Skills */
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;}
+    .skill-card{
+      padding:1rem;border-radius:.8rem;background:var(--surface);border:1px solid rgba(255,255,255,0.02);
+      text-align:center;
+    }
+    .skill-icon{font-size:1.6rem;color:var(--accent);margin-bottom:.5rem;}
+    .skill-card h5{margin:0;color:#E9F6FF;font-weight:700;}
+
+    /* Projects */
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.3rem;}
+    .project-card{
+      display:flex;flex-direction:column;background:var(--surface);border-radius:1rem;overflow:hidden;border:1px solid rgba(255,255,255,0.02);
+      transition: transform .28s, box-shadow .28s;
+    }
+    .project-card:hover{transform: translateY(-6px); box-shadow: 0 18px 48px rgba(0,0,0,0.6);}
+    .project-img{width:100%;height:160px;object-fit:cover;}
+    .project-content{padding:1rem;flex:1;display:flex;flex-direction:column;}
+    .project-tech{margin-top:.6rem;display:flex;flex-wrap:wrap;gap:.4rem;}
+    .tech-tag{background:rgba(255,255,255,0.02);padding:.25rem .5rem;border-radius:.45rem;font-weight:600;color:var(--muted);font-size:.78rem;}
+
+    /* Research */
+    .pub-item{padding:1rem;border-radius:.75rem;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.02);}
+
+    /* Contact */
+    .contact-card{padding:1.1rem;border-radius:.85rem;background:var(--surface);border:1px solid rgba(255,255,255,0.02);text-align:center;}
+    .contact-icon{font-size:2rem;color:var(--accent);margin-bottom:.5rem}
+    .social-links a{color:var(--muted);margin:0 .4rem;font-size:1.2rem;}
+    footer{padding:2rem 0;text-align:center;color:var(--muted);font-size:.9rem;}
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .about-grid{grid-template-columns:1fr;grid-auto-rows:auto;}
+      .hero{padding:4.5rem 0 2.5rem;}
+      .profile-img{width:180px;height:180px;}
+    }
+
+    /* Utility focus states */
+    a:focus, button:focus, input:focus, textarea:focus{outline:3px solid rgba(30,167,255,0.12);outline-offset:3px;}
+
+    /* small helpers */
+    .muted{color:var(--muted);}
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="navbar navbar-expand-lg sticky-top" aria-label="Main navigation">
+    <div class="container" style="max-width:var(--max-width);">
+      <a class="navbar-brand d-flex align-items-center" href="#home">
+        <span class="brand-name">G Prajwal Priyadarshan</span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu" aria-controls="navmenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon" style="color:var(--accent)"><i class="ri-menu-line" style="font-size:1.2rem;"></i></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navmenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#research">Research & Papers</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          <li class="nav-item ms-2"><a class="nav-link btn btn-sm cta-outline" href="/assets/resume.pdf" download>Download Resume</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="home" class="hero" role="banner">
+    <div class="container" style="max-width:var(--max-width);">
+      <div class="row align-items-center">
+        <div class="col-lg-7 col-left" data-aos="fade-right">
+          <p class="fs-6 muted">👋 Hi, I’m</p>
+          <h1 class="title">Prajwal — ML & Web Dev Student</h1>
+          <div class="tagline">ML · DL · Web Dev | Research & Projects</div>
+          <p class="elevator">2nd-year AIE undergraduate focused on developing applied ML/DL solutions and web tools. Research experience in wind forecasting and smart grid cybersecurity.</p>
+
+          <div class="d-flex gap-2" role="region" aria-label="Call to actions">
+            <a class="cta-primary me-2" href="#projects">View Projects</a>
+            <a class="cta-outline" href="/assets/resume.pdf" download>Download Resume</a>
+          </div>
+
+          <div class="tech-badges" aria-hidden="false" aria-label="Tech stack">
+            <div class="badge-tech">Python</div>
+            <div class="badge-tech">TensorFlow / PyTorch</div>
+            <div class="badge-tech">Streamlit</div>
+            <div class="badge-tech">MongoDB</div>
+            <div class="badge-tech">HTML · CSS · JS</div>
+            <div class="badge-tech">Arduino · C</div>
+          </div>
+
+          <div class="hero-meta" aria-hidden="false">
+            <strong>Location:</strong> Coimbatore &nbsp; • &nbsp; <strong>Student:</strong> 2nd-year AIE (4th semester), Amrita Vishwa Vidyapeetham
+          </div>
+        </div>
+
+        <div class="col-lg-5 text-center" data-aos="fade-left">
+          <!-- Replace /assets/profile.jpg with your headshot -->
+          <img src="assets\profile.jpg" alt="Profile photo of G Prajwal Priyadarshan" class="profile-img" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <section id="about" aria-labelledby="about-heading">
+    <div class="container" style="max-width:var(--max-width);">
+      <h2 id="about-heading" class="section-header" data-aos="fade-up">About</h2>
+      <div class="glass-card" data-aos="fade-up" data-aos-delay="80">
+        <div class="about-grid">
+          <div style="text-align:center">
+            <img src="assets/profile.jpg" alt="Prajwal headshot" class="profile-img" style="width:200px;height:200px;">
+            <div style="margin-top:.8rem;color:var(--muted);font-weight:600">G Prajwal Priyadarshan</div>
+            <div class="muted" style="font-size:.9rem">2nd-year AIE • Amrita Vishwa Vidyapeetham</div>
+          </div>
+
+          <div>
+            <p class="about-bio">I am an early-career builder and curious researcher focused on machine learning, deep learning, and web development. I build practical ML/DL solutions and small full-stack apps, and I contribute to research in wind forecasting and smart-grid cybersecurity. I prefer hands-on project work and enjoy translating research ideas into reproducible demos and Streamlit apps.</p>
+
+            <ul class="facts-list" aria-label="Quick facts">
+              <li><strong>Education:</strong> B.Tech — Amrita Vishwa Vidyapeetham, Coimbatore (2nd year, 4th semester)</li>
+              <li><strong>Interests:</strong> Wind power forecasting, smart grid cybersecurity, reinforcement learning, ML model deployment</li>
+              <li><strong>Contact:</strong> <a href="mailto:prajwalpriyadarshan@gmail.com">prajwalpriyadarshan@gmail.com</a></li>
+              <li><strong>Profiles:</strong> <a href="https://github.com/prajwal-priyadarshan" target="_blank" rel="noopener">GitHub</a> • <a href="https://www.linkedin.com/in/prajwal-priyadarshan?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" rel="noopener">LinkedIn</a></li>
+            </ul>
+
+            <div style="margin-top:1rem;">
+              <strong>Soft skills & approach:</strong>
+              <p class="muted" style="margin:.4rem 0 0;">Curiosity • Research-oriented • Quick learner • Team player • Practical & reproducible experimentation</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" aria-labelledby="skills-heading">
+    <div class="container" style="max-width:var(--max-width);">
+      <h2 id="skills-heading" class="section-header" data-aos="fade-up">Skills</h2>
+      <p class="muted" data-aos="fade-up" data-aos-delay="60">Tools and technologies I use</p>
+
+      <div class="skills-grid" data-aos="fade-up" data-aos-delay="120">
+        <div class="skill-card">
+          <div class="skill-icon"><i class="ri-python-fill"></i></div>
+          <h5>Python</h5>
+          <div class="muted" style="font-size:.85rem;margin-top:.4rem">ML, scripting, data pipelines</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon"><i class="ri-braces-line"></i></div>
+          <h5>TensorFlow / PyTorch</h5>
+          <div class="muted" style="font-size:.85rem;margin-top:.4rem">Deep learning frameworks</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon"><i class="ri-stream-line"></i></div>
+          <h5>Streamlit</h5>
+          <div class="muted" style="font-size:.85rem;margin-top:.4rem">Fast demos & prototypes</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon"><i class="ri-database-2-line"></i></div>
+          <h5>MongoDB</h5>
+          <div class="muted" style="font-size:.85rem;margin-top:.4rem">NoSQL & small full-stack apps</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon"><i class="ri-code-s-slash-line"></i></div>
+          <h5>HTML · CSS · JS</h5>
+          <div class="muted" style="font-size:.85rem;margin-top:.4rem">Frontend & deployment</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon"><i class="ri-tools-fill"></i></div>
+          <h5>Embedded / C</h5>
+          <div class="muted" style="font-size:.85rem;margin-top:.4rem">Arduino Uno projects</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" aria-labelledby="projects-heading">
+    <div class="container" style="max-width:var(--max-width);">
+      <h2 id="projects-heading" class="section-header" data-aos="fade-up">Projects</h2>
+      <p class="muted" data-aos="fade-up" data-aos-delay="60">Filter by category to explore — ML/DL, Web, Research, Embedded, Security</p>
+
+      <!-- Filters (simple) -->
+      <div class="d-flex gap-2 mb-3" data-aos="fade-up" data-aos-delay="90">
+        <button class="btn btn-sm cta-outline filter-btn" data-filter="all" aria-pressed="true">All</button>
+        <button class="btn btn-sm cta-outline filter-btn" data-filter="ml">ML/DL</button>
+        <button class="btn btn-sm cta-outline filter-btn" data-filter="web">Web</button>
+        <button class="btn btn-sm cta-outline filter-btn" data-filter="research">Research</button>
+        <button class="btn btn-sm cta-outline filter-btn" data-filter="embedded">Embedded</button>
+        <button class="btn btn-sm cta-outline filter-btn" data-filter="security">Security</button>
+      </div>
+
+      <div class="projects-grid" id="projects-grid" data-aos="fade-up" data-aos-delay="140">
+
+        <!-- Project: Fitness Management System -->
+        <article class="project-card" data-category="web">
+          <img class="project-img" src="assets/projects/fitness.png" alt="Fitness Management System screenshot" loading="lazy">
+          <div class="project-content">
+            <h4>Fitness Management System</h4>
+            <p class="muted">Full-stack gym management app using MongoDB, Flask/HTML/CSS/JS for member registration, schedules, and analytics.</p>
+            <div class="project-tech">
+              <span class="tech-tag">MongoDB</span><span class="tech-tag">Flask</span><span class="tech-tag">HTML/CSS/JS</span>
+            </div>
+            <div class="mt-3 d-flex gap-2">
+              <a class="btn btn-sm cta-primary" href="https://github.com/prajwal-priyadarshan/fitness-management" target="_blank" rel="noopener">GitHub</a>
+              <button class="btn btn-sm cta-outline" data-bs-toggle="modal" data-bs-target="#projModal" data-project='{"title":"Fitness Management System","role":"Full-stack Developer","timeline":"2 months","desc":"A web app for gym member registration, attendance, schedules, and analytics. Built using MongoDB and Flask; includes simple recommendation system for workouts.","stack":["MongoDB","Flask","HTML/CSS/JS"], "links":{"repo":"https://github.com/prajwal-priyadarshan/fitness-management"}}'>Read more</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Wind Energy Prediction -->
+        <article class="project-card" data-category="ml research">
+          <img class="project-img" src="assets/projects/wind.png" alt="Wind energy prediction demo" loading="lazy">
+          <div class="project-content">
+            <h4>Wind Energy Prediction (DL)</h4>
+            <p class="muted">Deep-learning forecasting model with a Streamlit prediction demo. Research focuses on short-term accuracy and uncertainty quantification.</p>
+            <div class="project-tech">
+              <span class="tech-tag">DL</span><span class="tech-tag">Streamlit</span><span class="tech-tag">Python</span>
+            </div>
+            <div class="mt-3 d-flex gap-2">
+              <a class="btn btn-sm cta-primary" href="https://github.com/prajwal-priyadarshan/wind-prediction" target="_blank" rel="noopener">Repo</a>
+              <a class="btn btn-sm cta-outline" href="https://your-streamlit-demo-link.example" target="_blank" rel="noopener">Live Demo</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Snake Game (Q-Learning) -->
+        <article class="project-card" data-category="ml">
+          <img class="project-img" src="assets/projects/snake.png" alt="Snake game Q-Learning" loading="lazy">
+          <div class="project-content">
+            <h4>Snake Game — Q-Learning</h4>
+            <p class="muted">Reinforcement-learning agent trained using Q-Learning; includes reward design and gameplay visualizations (GIF).</p>
+            <div class="project-tech">
+              <span class="tech-tag">Reinforcement Learning</span><span class="tech-tag">Python</span>
+            </div>
+            <div class="mt-3 d-flex gap-2">
+              <a class="btn btn-sm cta-primary" href="https://github.com/prajwal-priyadarshan/snake-qlearning" target="_blank" rel="noopener">GitHub</a>
+              <button class="btn btn-sm cta-outline" data-bs-toggle="modal" data-bs-target="#projModal" data-project='{"title":"Snake (Q-Learning)","role":"RL Researcher","timeline":"3 weeks","desc":"Q-Learning implementation for Snake with reward shaping and decay schedule; includes GIF demo and training curves.","stack":["Python","NumPy"]}'>Read more</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- House Price Prediction (ADMM) -->
+        <article class="project-card" data-category="ml">
+          <img class="project-img" src="assets/projects/house.png" alt="House price ADMM" loading="lazy">
+          <div class="project-content">
+            <h4>House Price Prediction (ADMM)</h4>
+            <p class="muted">Experiment with ADMM for regression to improve generalization — includes comparison plots and metrics.</p>
+            <div class="project-tech"><span class="tech-tag">ML</span><span class="tech-tag">ADMM</span><span class="tech-tag">Python</span></div>
+            <div class="mt-3 d-flex gap-2">
+              <a class="btn btn-sm cta-primary" href="https://github.com/prajwal-priyadarshan/house-admm" target="_blank" rel="noopener">GitHub</a>
+              <button class="btn btn-sm cta-outline" data-bs-toggle="modal" data-bs-target="#projModal" data-project='{"title":"House Price Prediction (ADMM)","role":"Researcher","timeline":"1 month","desc":"Applied ADMM to house price regression and reported improvements in certain metrics vs baseline models.","stack":["Python","scikit-learn"]}'>Read more</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Metagenomic Data Analysis -->
+        <article class="project-card" data-category="ml">
+          <img class="project-img" src="assets/projects/metagenomics.png" alt="Metagenomic data analysis" loading="lazy">
+          <div class="project-content">
+            <h4>Metagenomic Data Analysis</h4>
+            <p class="muted">Bioinformatics ML pipeline for classification and feature selection; shares dataset and performance summary.</p>
+            <div class="project-tech"><span class="tech-tag">Bioinformatics</span><span class="tech-tag">ML</span></div>
+            <div class="mt-3 d-flex gap-2">
+              <a class="btn btn-sm cta-primary" href="https://github.com/prajwal-priyadarshan/metagenomic-analysis" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ARP Spoofing in LAN -->
+        <article class="project-card" data-category="security">
+          <img class="project-img" src="assets/projects/arp.png" alt="ARP spoofing experiment" loading="lazy">
+          <div class="project-content">
+            <h4>ARP Spoofing in LAN (Kali)</h4>
+            <p class="muted">Security experiment documenting methodology, ethical considerations, and defensive measures.</p>
+            <div class="project-tech"><span class="tech-tag">Cybersecurity</span><span class="tech-tag">Kali</span></div>
+            <div class="mt-3 d-flex gap-2">
+              <button class="btn btn-sm cta-outline" data-bs-toggle="modal" data-bs-target="#projModal" data-project='{"title":"ARP Spoofing in LAN","role":"Security Research","timeline":"2 weeks","desc":"Controlled experiment to demonstrate ARP spoofing and recommended network hardening countermeasures.","stack":["Kali Linux","Scapy"]}'>Read more</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- File Access Manager in C -->
+        <article class="project-card" data-category="embedded web">
+          <img class="project-img" src="assets/projects/fileaccess.png" alt="File Access Manager in C" loading="lazy">
+          <div class="project-content">
+            <h4>File Access Manager (C)</h4>
+            <p class="muted">System-level project using POSIX syscalls to implement permission controls and logging.</p>
+            <div class="project-tech"><span class="tech-tag">C</span><span class="tech-tag">Systems</span></div>
+            <div class="mt-3 d-flex gap-2">
+              <a class="btn btn-sm cta-primary" href="https://github.com/prajwal-priyadarshan/file-access-manager" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Smart Grid Cybersecurity Research -->
+        <article class="project-card" data-category="research security">
+          <img class="project-img" src="assets/projects/smartgrid.png" alt="Smart grid cybersecurity research" loading="lazy">
+          <div class="project-content">
+            <h4>Smart Grid Cybersecurity Research</h4>
+            <p class="muted">Journal paper on cybersecurity of smart grids — includes MDPI publication link and contributions summary.</p>
+            <div class="project-tech"><span class="tech-tag">Research</span><span class="tech-tag">Security</span></div>
+            <div class="mt-3 d-flex gap-2">
+              <a class="btn btn-sm cta-primary" href="https://www.mdpi.com/example" target="_blank" rel="noopener">Paper</a>
+              <a class="btn btn-sm cta-outline" href="https://github.com/prajwal-priyadarshan/smartgrid-research" target="_blank" rel="noopener">Repo</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Burglar Alarm (Arduino) -->
+        <article class="project-card" data-category="embedded">
+          <img class="project-img" src="assets/projects/burglar.png" alt="Burglar alarm Arduino" loading="lazy">
+          <div class="project-content">
+            <h4>Burglar Alarm (Arduino Uno)</h4>
+            <p class="muted">Prototype using PIR sensor, buzzer, and Arduino Uno. Circuit diagrams and code included.</p>
+            <div class="project-tech"><span class="tech-tag">Arduino</span><span class="tech-tag">Embedded</span></div>
+            <div class="mt-3 d-flex gap-2">
+              <a class="btn btn-sm cta-primary" href="https://github.com/prajwal-priyadarshan/burglar-alarm" target="_blank" rel="noopener">Repo</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Popularity Prediction & Demand Forecaster -->
+        <article class="project-card" data-category="ml">
+          <img class="project-img" src="assets/projects/popularity.png" alt="Popularity prediction" loading="lazy">
+          <div class="project-content">
+            <h4>Popularity Prediction & Demand Forecaster</h4>
+            <p class="muted">ML-based forecasting pipeline for product demand and popularity, with evaluation and visualization pages.</p>
+            <div class="project-tech"><span class="tech-tag">Time Series</span><span class="tech-tag">ML</span></div>
+            <div class="mt-3 d-flex gap-2">
+              <a class="btn btn-sm cta-primary" href="https://github.com/prajwal-priyadarshan/popularity-forecast" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Research & Publications -->
+  <section id="research" aria-labelledby="research-heading">
+    <div class="container" style="max-width:var(--max-width);">
+      <h2 id="research-heading" class="section-header" data-aos="fade-up">Research & Publications</h2>
+      <p class="muted" data-aos="fade-up" data-aos-delay="40">Selected papers and research outputs</p>
+
+      <div class="row g-3" data-aos="fade-up" data-aos-delay="80">
+        <div class="col-md-6">
+          <div class="pub-item">
+            <h5>Advancing Short-Term Wind Power Forecasting by AI-Driven Models</h5>
+            <div class="muted" style="font-size:.9rem;margin-bottom:.6rem">Conference/Journal • Year</div>
+            <p class="muted" style="font-size:.95rem">A hybrid AI-driven approach to short-term wind forecasting that improves accuracy and quantifies uncertainty. Includes Streamlit demo and model comparisons.</p>
+            <div><a class="btn btn-sm cta-primary" href="https://www.springerprofessional.de/en/advancing-short-term-wind-power-forecasting-by-ai-driven-models-/51323318#pay-wall" target="_blank" rel="noopener">View Paper</a> <a class="btn btn-sm cta-outline" href="assets/papers/wind-forecasting.pdf" download>Download PDF</a></div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="pub-item">
+            <h5>Smart Grid Cybersecurity: Detection & Mitigation</h5>
+            <div class="muted" style="font-size:.9rem;margin-bottom:.6rem">MDPI Journal • Year</div>
+            <p class="muted" style="font-size:.95rem">Journal paper investigating attack modes on BESS and smart-grid infrastructure, and proposing anomaly detection strategies combining ML and physics-based models.</p>
+            <div><a class="btn btn-sm cta-primary" href="https://www.mdpi.com/2227-7080/13/9/423" target="_blank" rel="noopener">View Paper</a> <a class="btn btn-sm cta-outline" href="assets/papers/smartgrid-cyber.pdf" download>Download PDF</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" aria-labelledby="services-heading">
+    <div class="container" style="max-width:var(--max-width);">
+      <h2 id="services-heading" class="section-header" data-aos="fade-up">Services</h2>
+      <p class="muted" data-aos="fade-up" data-aos-delay="40">Student-friendly offerings — honest and small-scale</p>
+
+      <div class="row g-3">
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="80">
+          <div class="glass-card">
+            <h5>ML / DL Prototyping</h5>
+            <p class="muted">Model prototyping, evaluation, and Streamlit demos for research or small product proofs.</p>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="120">
+          <div class="glass-card">
+            <h5>Small Web Apps</h5>
+            <p class="muted">Full-stack prototypes (Streamlit or Flask) and simple deployments to Vercel/Heroku/Netlify.</p>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="160">
+          <div class="glass-card">
+            <h5>Research Assistance</h5>
+            <p class="muted">Literature reviews, data analysis, experiment replication, and writing support for student-level research.</p>
+          </div>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:0.8rem">Interested? <a href="#contact" class="cta-outline">Let's collaborate</a></p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" aria-labelledby="contact-heading">
+    <div class="container" style="max-width:var(--max-width);">
+      <h2 id="contact-heading" class="section-header" data-aos="fade-up">Contact</h2>
+      <p class="muted" data-aos="fade-up" data-aos-delay="40">Available for small projects, collaborations, and research assistance</p>
+
+      <div class="row g-4" data-aos="fade-up" data-aos-delay="80">
+        <div class="col-md-5">
+          <div class="contact-card">
+            <div class="contact-icon"><i class="ri-mail-line"></i></div>
+            <h5>Email</h5>
+            <p class="muted">prajwalpriyadarshan@gmail.com</p>
+            <a class="btn btn-sm cta-primary" href="mailto:prajwalpriyadarshan@gmail.com">Send Email</a>
+
+            <hr style="border-color: rgba(255,255,255,0.03);margin:1rem 0;">
+
+            <div style="text-align:center">
+              <div class="social-links">
+                <a href="https://github.com/prajwal-priyadarshan" target="_blank" rel="noopener" aria-label="GitHub"><i class="ri-github-fill"></i></a>
+                <a href="https://www.linkedin.com/in/prajwal-priyadarshan?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="ri-linkedin-fill"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-7">
+          <form id="contact-form" class="glass-card" action="https://formspree.io/f/your-form-id" method="POST" aria-label="Contact form">
+            <!-- Honeypot -->
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+            <div class="row g-2">
+              <div class="col-sm-6">
+                <label class="form-label visually-hidden" for="name">Name</label>
+                <input id="name" name="name" class="form-control" placeholder="Your name" required aria-required="true">
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label visually-hidden" for="email">Email</label>
+                <input id="email" name="email" type="email" class="form-control" placeholder="Your email" required aria-required="true">
+              </div>
+              <div class="col-12">
+                <label class="form-label visually-hidden" for="message">Message</label>
+                <textarea id="message" name="message" rows="5" class="form-control" placeholder="Brief message..." required aria-required="true"></textarea>
+              </div>
+              <div class="col-12 d-flex align-items-center gap-2">
+                <input id="purpose" name="purpose" type="checkbox" value="collab" />
+                <label for="purpose" class="muted">This is about a project / collaboration / research</label>
+              </div>
+
+              <div class="col-12 d-flex gap-2">
+                <button type="submit" class="btn cta-primary">Send message</button>
+                <button type="button" id="mailto-fallback" class="btn cta-outline">Open mail client</button>
+              </div>
+              <div id="form-msg" class="muted" style="margin-top:.6rem;font-size:.95rem"></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer role="contentinfo">
+    <div class="container" style="max-width:var(--max-width);">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+        <div>&copy; <span id="year"></span> G Prajwal Priyadarshan. All rights reserved.</div>
+        <div class="muted">Built with focus on accessibility & performance • <a href="/sitemap.xml" class="muted">Sitemap</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Project modal (Bootstrap) -->
+  <div class="modal fade" id="projModal" tabindex="-1" aria-labelledby="projModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content" style="background:var(--surface);color:#E6EEF3;border:1px solid rgba(255,255,255,0.02)">
+        <div class="modal-header">
+          <h5 class="modal-title" id="projModalLabel">Project</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h4 id="proj-title"></h4>
+          <p id="proj-role" class="muted"></p>
+          <p id="proj-desc"></p>
+          <div id="proj-stack" style="margin-top:.6rem"></div>
+          <div id="proj-links" style="margin-top:1rem"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script>
+    AOS.init({ duration: 700, once: true });
+
+    // dynamic year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // contact form mailto fallback (in case Formspree not configured)
+    document.getElementById('mailto-fallback').addEventListener('click', function(){
+      const name = document.getElementById('name').value || 'Hello';
+      const email = document.getElementById('email').value || '';
+      const msg = document.getElementById('message').value || '';
+      const subject = encodeURIComponent('Project inquiry from website');
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${msg}`);
+      window.location.href = `mailto:prajwalpriyadarshan@gmail.com?subject=${subject}&body=${body}`;
+    });
+
+    // project modal population
+    const projModal = document.getElementById('projModal');
+    projModal.addEventListener('show.bs.modal', function (event) {
+      const btn = event.relatedTarget;
+      let data = {};
+      try { data = JSON.parse(btn.getAttribute('data-project')); } catch(e){ data = {}; }
+      document.getElementById('proj-title').textContent = data.title || 'Project';
+      document.getElementById('proj-role').textContent = (data.role ? data.role + ' • ' : '') + (data.timeline ? data.timeline : '');
+      document.getElementById('proj-desc').textContent = data.desc || '';
+      const stackEl = document.getElementById('proj-stack'); stackEl.innerHTML = '';
+      (data.stack || []).forEach(s => { const el = document.createElement('span'); el.className='tech-tag'; el.style.marginRight='6px'; el.textContent = s; stackEl.appendChild(el); });
+      const linksEl = document.getElementById('proj-links'); linksEl.innerHTML='';
+      if(data.links){
+        for(const [k,v] of Object.entries(data.links)){
+          const a = document.createElement('a'); a.href = v; a.target='_blank'; a.rel='noopener'; a.className='btn btn-sm cta-outline me-1'; a.textContent = k.charAt(0).toUpperCase() + k.slice(1);
+          linksEl.appendChild(a);
+        }
+      }
+    });
+
+    // project filtering (simple)
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projectsGrid = document.getElementById('projects-grid');
+    filterBtns.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        filterBtns.forEach(b=>b.setAttribute('aria-pressed','false'));
+        btn.setAttribute('aria-pressed','true');
+        const f = btn.getAttribute('data-filter');
+        const cards = projectsGrid.children;
+        Array.from(cards).forEach(card=>{
+          const cats = (card.getAttribute('data-category') || '').toLowerCase();
+          if(f === 'all' || cats.includes(f)) { card.style.display='flex'; }
+          else { card.style.display='none'; }
+        });
+      });
+    });
+
+    // keyboard accessible: allow enter to trigger filter when focused
+    filterBtns.forEach(btn=>{
+      btn.addEventListener('keydown', (e)=>{
+        if(e.key === 'Enter' || e.key === ' ') btn.click();
+      });
+    });
+
+    // simple progressive enhancement: mark nav link active on scroll
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = Array.from(document.querySelectorAll('section, header'));
+    window.addEventListener('scroll', ()=>{
+      const y = window.scrollY + 120;
+      let current = sections[0].id || 'home';
+      for(const s of sections){
+        if(s.offsetTop <= y) current = s.id;
+      }
+      navLinks.forEach(a=>{
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    });
+
+    // lazy enhancement: prefer reduced motion users
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      document.documentElement.style.scrollBehavior = 'auto';
+    }
+  </script>
+
+  <!-- Accessibility: skip link -->
+  <a href="#home" class="visually-hidden-focusable" style="position:fixed;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;">Skip to content</a>
+</body>
+</html>
